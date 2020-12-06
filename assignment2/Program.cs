@@ -7,7 +7,7 @@ namespace assignment2
 
         static void Main(string[] args)
         {
-            
+            StartPage();
         }
 
 
@@ -28,10 +28,10 @@ namespace assignment2
 
         }
 
-        //Kollar om koden är rätt
+        //Kollar om koden är rätt. Valde att inte göra det ok med liten bokstav i början för att det ska vara som ett vanligt lösenord
         public static bool ValidateCode(string answer)
         {
-            return answer == "coffeencode";          
+            return answer == "Coffeencode";          
         }
 
         //Skriver ut en meny och ger tre val. Alla valen skickar vidare till olika metoder.
@@ -44,7 +44,9 @@ namespace assignment2
             Console.WriteLine("3. Ta bort en person ur listan");
             string answer = Console.ReadLine();
 
-
+            // om svaret är 1, skicka till metod som skriver ut listan med alla personer
+            // om svaret är 2, skicka till metod som ber användaren välja vilken person och sedan skriver ut denna och informationen
+            // om svaret är 3, skicka till metod som ber om vilken person att ta bort och sedan tar bort denna ur listan.
         }
 
 
