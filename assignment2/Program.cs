@@ -8,15 +8,16 @@ namespace assignment2
 
         static void Main(string[] args)
         {
-            List<string> membersOfTheGroup = new List<string> {"Madde" };
-            List<string> informationAboutEachMember = new List<string> {"bor i Haninge" };
+            List<Member> membersOfTheGroup = new List<Member>();
 
-            StartPage(membersOfTheGroup, informationAboutEachMember);
+            membersOfTheGroup.Add(new Member("Madde", "Stockholm", 35, "Hyr en villa", "Sambo och dotter", "tre", "testare", "Bakning och spela Stardew Valley", "Biff, bea occh sötpotatis", "allt som inte är barnvisor", "Vill skapa själv"));
+
+            StartPage(membersOfTheGroup);
         }
 
 
         //Startar programmet och ber om en kod. Vid fel kod stängs programmet
-        public static void StartPage(List<string> membersOfTheGroup, List<string> informationAboutEachMember)
+        public static void StartPage(List<Member> membersOfTheGroup)
         {
             Console.WriteLine("Välkommen! Vänligen ange en kod för att fortsätta: ");
             string answer = Console.ReadLine();
@@ -27,7 +28,7 @@ namespace assignment2
             }
             else
             {
-                Menu(membersOfTheGroup, informationAboutEachMember);
+                Menu(membersOfTheGroup);
             }
 
         }
@@ -39,7 +40,7 @@ namespace assignment2
         }
 
         //Skriver ut en meny och ger tre val. Alla valen skickar vidare till olika metoder.
-        public static void Menu(List<string> membersOfTheGroup, List<string> informationAboutEachMember)
+        public static void Menu(List<Member> membersOfTheGroup)
         {
             Console.WriteLine("Korrekt kod. Välkommen till gruppen Coffee n Code");
             Console.WriteLine("Vad vill du göra?");
@@ -57,7 +58,7 @@ namespace assignment2
                     PrintAllMembers(membersOfTheGroup);
                     break;
                 case 2:
-                    PrintInformation(membersOfTheGroup, informationAboutEachMember);
+                    PrintInformation(membersOfTheGroup);
                     break;
                 case 3:
                     RemovePerson(membersOfTheGroup);
@@ -68,41 +69,42 @@ namespace assignment2
             }
         }
 
-        public static void PrintAllMembers(List<string> membersOfTheGroup)
+        public static void PrintAllMembers(List<Member> membersOfTheGroup)
         {
             //Skriver ut alla medlemmar i gruppen
-            foreach(string index in membersOfTheGroup)
+            
+            foreach (Member member in membersOfTheGroup)
             {
-                 Console.WriteLine(index);
+                 Console.WriteLine(member.Name);
             }
 
         }
 
-        public static void PrintInformation(List<string> membersOfTheGroup, List<string> informationAboutTheGroup)
+        public static void PrintInformation(List<Member> membersOfTheGroup)
         {
             //Användaren får först välja vem de vill veta mer om, sedan skrivs den personens information ut.
             Console.WriteLine("Vem vill du veta mer om?");
 
             //skriver ut medlemmarna med sin indexsiffra, tänker att man skriver vilken siffran på personen i fråga då.
-            for(int i = 0; i<membersOfTheGroup.Count; i++)
+            for (int i = 0; i < membersOfTheGroup.Count; i++)
             {
-                Console.WriteLine(i + "." + membersOfTheGroup[i]);
+                Console.WriteLine($"{i}. {membersOfTheGroup[i].Name}");
             }
 
             int answer = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine(informationAboutTheGroup[answer]);
-             
-            
+
+            Console.WriteLine(membersOfTheGroup[answer]);
         }
 
-        public static void RemovePerson(List<string> membersOfTheGroup)
+        public static void RemovePerson(List<Member> membersOfTheGroup)
         {
             //Användaren väljer vem som ska tas bort
             Console.WriteLine("Vem vill du ta bort?");
-            foreach (string index in membersOfTheGroup)
+            foreach (Member index in membersOfTheGroup)
             {
                 Console.WriteLine(index);
             }
+
             string answer = Console.ReadLine();
 
 
