@@ -40,7 +40,7 @@ namespace assignment2
 
         public override string ToString()
         {
-            return $"{this.Name} bor i {this.City} och är {this.Age} år. Bor i en {this.Housing} med {this.Family} och har {this.Pets} husdjur. Var tidigare {this.Occupation} och hobby är {this.Hobby}. " +
+            return $"{this.Name} bor i {this.City}, är {this.Age} år och bor i en {this.Housing}. Familjen består av {this.Family}. Vad har {this.Name} för husdjur? {this.Pets}. Var tidigare {this.Occupation} och hobby är {this.Hobby}. " +
                 $"Favoritmaten är {this.FavoriteFood} och favoritmusiken {this.FavoriteMusic}. Vad är {this.Name}s driv till programmering? {this.reasonForProgramming}";
         }
     }

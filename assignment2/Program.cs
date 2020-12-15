@@ -1,16 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Security;
 
 namespace assignment2
 {
     class Program
     {
 
+        private static List<Member> membersOfTheGroup = new List<Member>();
+
         static void Main(string[] args)
         {
-            List<Member> membersOfTheGroup = new List<Member>();
+           //Lägg till en metod som lägger till datan i listan
+            membersOfTheGroup.Add(new Member("Madeleine Karlsson", "Stockholm", 35, "villa", "sambo och dotter", "Tre katter", "testare", "bakning och spela Stardew Valley", 
+                "biff, bea occh sötpotatis", "allt som inte är barnvisor", "Har alltid tyckt att det är intressant hur system är uppbyggda och hur de skapas, så nu vill jag kunna göra det själv"));
+            membersOfTheGroup.Add(new Member("Mikael Alexander Larsson", "Vänersborg", 36, "villa", "fru, två döttrar och en tredje på väg", "Två kaniner",
+                "restauranglärare", "träning och hälsa, och surdegsbröd", "bönchiligryta i tortillabröd", "elektroniskt", 
+                "Den dagliga härngympan man får med programmering, det är kreativt och att man faktiskt skapar en produkt i slutändan"));
+            membersOfTheGroup.Add(new Member("Sammy On Tat Wong", "Åmal", 54, "villa", "fru och son", "Tre katter och en hund",
+                "personlig assistent", "fotografering och matlagning", "asiatiskt, italienskt och svensk husmanskost", "soul, RnB, house", 
+                "Att kunna skapa någonting själv, problemlösning och tillfredställelse när man löst ett problem"));
+            membersOfTheGroup.Add(new Member("David Josef Frödin", "Sundbyberg", 25, "lägenhet", "det vanliga", "Inga", "verksamhetschef på en studentförening",
+                "leta efter universums hemligheter, målning, lära sig språk", "bortsch", "allt! Inne i en rockperiod som varvas med rysk folkmusik",
+                "Det är ballt och jag får kombinera kreativitet, problemlösning och människoperspektiv i en trevlig mix"));
+            membersOfTheGroup.Add(new Member("Rauf Karimli", "Göteborg", 36, "villa", "fru, en son och en dotter", "Inga", "projektledare", "spela piano och laga mat",
+                "grillat kött", "gott och blandat", "De gränslösa möjligheterna att utveckla och utvecklas"));
+            membersOfTheGroup.Add(new Member("Erik Rindlert", "Stockholm", 31, "lägenhet", "han själv, är ogift", "Inga", "IT-support", "litteratur och datorspel", "svensk-fransk fisksoppa",
+                "Schubert eller Darkthrone, beroende på dag", "Bygga, bygga, bygga"));
+            membersOfTheGroup.Add(new Member("Daniel Jacob Arlbring", "Alingsås", 24, "lägenhet", "sambo", "Inga", "väktare", "motorsport och datorspel", "italienskt", "house", ""));
+            membersOfTheGroup.Add(new Member("Svante Joelsson", "Strömstad", 36, "lägenhet", "sambo och en son", "Hund", "fritidspedagog/förskolelärare", "illustrera och animera", "pasta al fungi",
+                "gubbrock och allt som är bra", "Kul kombo av problemlösning och kreativitet, och att en dag landa ett jobb med mer frihet"));
+            membersOfTheGroup.Add(new Member("Sarah Winroth", "Vara", 31, "lägenhet", "man", "Inga", "reseledare", "motionera gärna", "älskar mat i alla former", "det mesta",
+                "Själva problemlösningen och tillfredsställelsen efteråt!"));
+            membersOfTheGroup.Add(new Member("Farzane Zafarzade", "Karlstad", 32, "lägenhet", "man och inga barn", "Inga", "IT-support", "träning och bakning", "alla typer av pastarätter",
+                "lugn och klassisk musik", "Problemlösning, genom att lösa problem lär man sig att bli mer tålmodig och kreativ"));
 
-            membersOfTheGroup.Add(new Member("Madde", "Stockholm", 35, "Hyr en villa", "Sambo och dotter", "tre", "testare", "Bakning och spela Stardew Valley", "Biff, bea occh sötpotatis", "allt som inte är barnvisor", "Vill skapa själv"));
+
 
             StartPage(membersOfTheGroup);
         }
@@ -42,30 +68,40 @@ namespace assignment2
         //Skriver ut en meny och ger tre val. Alla valen skickar vidare till olika metoder.
         public static void Menu(List<Member> membersOfTheGroup)
         {
-            Console.WriteLine("Korrekt kod. Välkommen till gruppen Coffee n Code");
-            Console.WriteLine("Vad vill du göra?");
-            Console.WriteLine("1. Skriv ut alla personer i gruppen");
-            Console.WriteLine("2. Skriv ut generell information om en person");
-            Console.WriteLine("3. Ta bort en person ur listan");
-            int answer = Convert.ToInt32(Console.ReadLine());
 
-            // om svaret är 1, skicka till metod som skriver ut listan med alla personer
-            // om svaret är 2, skicka till metod som ber användaren välja vilken person och sedan skriver ut denna och informationen
-            // om svaret är 3, skicka till metod som ber om vilken person att ta bort och sedan tar bort denna ur listan.
-            switch (answer)
+            bool keepGoing = true;
+
+            Console.WriteLine("Korrekt kod. Välkommen till gruppen Coffee n Code");
+
+            while (keepGoing)
             {
-                case 1:
-                    PrintAllMembers(membersOfTheGroup);
-                    break;
-                case 2:
-                    PrintInformation(membersOfTheGroup);
-                    break;
-                case 3:
-                    RemovePerson(membersOfTheGroup);
-                    break;
-                default:
-                    Console.WriteLine("Fel input.");
-                    break;
+                Console.WriteLine("Vad vill du göra?");
+                Console.WriteLine("1. Skriv ut alla personer i gruppen");
+                Console.WriteLine("2. Skriv ut generell information om en person");
+                Console.WriteLine("3. Ta bort en person ur listan");
+                Console.WriteLine("Tryck q för att avsluta.");
+                string answer = Console.ReadLine();
+                Console.Clear();
+
+                switch (answer)
+                {
+                    case "1":
+                        PrintAllMembers(membersOfTheGroup);
+                        break;
+                    case "2":
+                        PrintInformationAboutMember(membersOfTheGroup);
+                        break;
+                    case "3":
+                        RemoveMemberFromList(membersOfTheGroup);
+                        break;
+                    case "q":
+                        keepGoing = false;
+                        break;
+                    default:
+                        Console.WriteLine("Fel input.");
+                        break;
+     
+                }
             }
         }
 
@@ -75,12 +111,12 @@ namespace assignment2
             
             foreach (Member member in membersOfTheGroup)
             {
-                 Console.WriteLine(member.Name);
+                 Console.Write($"{member.Name}, ");
             }
-
+            Console.WriteLine("");
         }
 
-        public static void PrintInformation(List<Member> membersOfTheGroup)
+        public static void PrintInformationAboutMember(List<Member> membersOfTheGroup)
         {
             //Användaren får först välja vem de vill veta mer om, sedan skrivs den personens information ut.
             Console.WriteLine("Vem vill du veta mer om?");
@@ -88,26 +124,35 @@ namespace assignment2
             //skriver ut medlemmarna med sin indexsiffra, tänker att man skriver vilken siffran på personen i fråga då.
             for (int i = 0; i < membersOfTheGroup.Count; i++)
             {
-                Console.WriteLine($"{i}. {membersOfTheGroup[i].Name}");
+
+                Console.WriteLine($"{i + 1}. {membersOfTheGroup[i].Name}");
             }
 
             int answer = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine(membersOfTheGroup[answer]);
+            Console.WriteLine(membersOfTheGroup[answer - 1]);
         }
 
-        public static void RemovePerson(List<Member> membersOfTheGroup)
+        public static void RemoveMemberFromList(List<Member> membersOfTheGroup)
         {
             //Användaren väljer vem som ska tas bort
             Console.WriteLine("Vem vill du ta bort?");
-            foreach (Member index in membersOfTheGroup)
+            /*foreach (Member member in membersOfTheGroup)
             {
-                Console.WriteLine(index);
+                Console.WriteLine(member.Name);
             }
 
-            string answer = Console.ReadLine();
+            string answer = Console.ReadLine();*/
+            for (int i = 0; i < membersOfTheGroup.Count; i++)
+            {
 
+                Console.WriteLine($"{i + 1}. {membersOfTheGroup[i].Name}");
+            }
 
+            int answer = Convert.ToInt32(Console.ReadLine());
+
+            membersOfTheGroup.RemoveAt(answer - 1);
+      
 
         }
     }
