@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security;
 
@@ -12,14 +13,22 @@ namespace assignment2
 
         static void Main(string[] args)
         {
-           //Lägg till en metod som lägger till datan i listan
-            membersOfTheGroup.Add(new Member("Madeleine Karlsson", "Stockholm", 35, "villa", "sambo och dotter", "Tre katter", "testare", "bakning och spela Stardew Valley", 
-                "biff, bea occh sötpotatis", "allt som inte är barnvisor", "Har alltid tyckt att det är intressant hur system är uppbyggda och hur de skapas, så nu vill jag kunna göra det själv"));
+            
+            AddInformationAboutEachMember();
+
+            StartPage(membersOfTheGroup);
+        }
+
+        //Lägger till all information i listan
+        private static void AddInformationAboutEachMember()
+        {
+            membersOfTheGroup.Add(new Member("Madeleine Karlsson", "Stockholm", 35, "villa", "sambo och dotter", "Tre katter", "testare", "bakning och spela Stardew Valley",
+                            "biff, bea occh sötpotatis", "allt som inte är barnvisor", "Har alltid tyckt att det är intressant hur system är uppbyggda och hur de skapas, så nu vill jag kunna göra det själv"));
             membersOfTheGroup.Add(new Member("Mikael Alexander Larsson", "Vänersborg", 36, "villa", "fru, två döttrar och en tredje på väg", "Två kaniner",
-                "restauranglärare", "träning och hälsa, och surdegsbröd", "bönchiligryta i tortillabröd", "elektroniskt", 
+                "restauranglärare", "träning och hälsa, och surdegsbröd", "bönchiligryta i tortillabröd", "elektroniskt",
                 "Den dagliga härngympan man får med programmering, det är kreativt och att man faktiskt skapar en produkt i slutändan"));
             membersOfTheGroup.Add(new Member("Sammy On Tat Wong", "Åmal", 54, "villa", "fru och son", "Tre katter och en hund",
-                "personlig assistent", "fotografering och matlagning", "asiatiskt, italienskt och svensk husmanskost", "soul, RnB, house", 
+                "personlig assistent", "fotografering och matlagning", "asiatiskt, italienskt och svensk husmanskost", "soul, RnB, house",
                 "Att kunna skapa någonting själv, problemlösning och tillfredställelse när man löst ett problem"));
             membersOfTheGroup.Add(new Member("David Josef Frödin", "Sundbyberg", 25, "lägenhet", "det vanliga", "Inga", "verksamhetschef på en studentförening",
                 "leta efter universums hemligheter, målning, lära sig språk", "bortsch", "allt! Inne i en rockperiod som varvas med rysk folkmusik",
@@ -35,14 +44,10 @@ namespace assignment2
                 "Själva problemlösningen och tillfredsställelsen efteråt!"));
             membersOfTheGroup.Add(new Member("Farzane Zafarzade", "Karlstad", 32, "lägenhet", "man och inga barn", "Inga", "IT-support", "träning och bakning", "alla typer av pastarätter",
                 "lugn och klassisk musik", "Problemlösning, genom att lösa problem lär man sig att bli mer tålmodig och kreativ"));
-
-
-
-            StartPage(membersOfTheGroup);
         }
 
 
-        //Startar programmet och ber om en kod. Vid fel kod stängs programmet
+        //Startar programmet och ber om en kod. Vid fel kod skrivs felmeddelande ut och programmet stängs
         public static void StartPage(List<Member> membersOfTheGroup)
         {
             Console.WriteLine("Välkommen! Vänligen ange en kod för att fortsätta: ");
@@ -59,10 +64,18 @@ namespace assignment2
 
         }
 
-        //Kollar om koden är rätt. Valde att inte göra det ok med liten bokstav i början för att det ska vara som ett vanligt lösenord
+        //Kollar om koden är rätt. 
         public static bool ValidateCode(string answer)
         {
-            return answer == "Coffeencode";          
+            return answer == "Coffeencode";
+        }
+
+        //Används där info skrivs ut, väntar sedan på input från användaren innan programmet går vidare och rensar consolen.
+        public static void WaitAndClearConsole()
+        {
+            Console.WriteLine("Tryck på enter för att fortsätta.");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         //Skriver ut en meny och ger tre val. Alla valen skickar vidare till olika metoder.
@@ -73,6 +86,7 @@ namespace assignment2
 
             Console.WriteLine("Korrekt kod. Välkommen till gruppen Coffee n Code");
 
+            //while-loopen fortsätter tills användaren väljer att avsluta med q
             while (keepGoing)
             {
                 Console.WriteLine("Vad vill du göra?");
@@ -100,20 +114,24 @@ namespace assignment2
                     default:
                         Console.WriteLine("Fel input.");
                         break;
-     
+
                 }
             }
         }
 
         public static void PrintAllMembers(List<Member> membersOfTheGroup)
         {
-            //Skriver ut alla medlemmar i gruppen
-            
-            foreach (Member member in membersOfTheGroup)
+            //Skriver ut alla medlemmar i gruppen, endast namnen
+            List<string> names = new List<string>();
+
+            foreach(Member member in membersOfTheGroup)
             {
-                 Console.Write($"{member.Name}, ");
+                names.Add(member.Name);
             }
-            Console.WriteLine("");
+
+            Console.WriteLine(string.Join(", ", names));
+
+            WaitAndClearConsole();
         }
 
         public static void PrintInformationAboutMember(List<Member> membersOfTheGroup)
@@ -121,7 +139,7 @@ namespace assignment2
             //Användaren får först välja vem de vill veta mer om, sedan skrivs den personens information ut.
             Console.WriteLine("Vem vill du veta mer om?");
 
-            //skriver ut medlemmarna med sin indexsiffra, tänker att man skriver vilken siffran på personen i fråga då.
+            //skriver ut medlemmarna som en numrerad lista, har gjort i+1 för att få siffrorna till 1-10 istället för 0-9
             for (int i = 0; i < membersOfTheGroup.Count; i++)
             {
 
@@ -131,18 +149,15 @@ namespace assignment2
             int answer = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine(membersOfTheGroup[answer - 1]);
+
+            WaitAndClearConsole();
         }
 
         public static void RemoveMemberFromList(List<Member> membersOfTheGroup)
         {
             //Användaren väljer vem som ska tas bort
             Console.WriteLine("Vem vill du ta bort?");
-            /*foreach (Member member in membersOfTheGroup)
-            {
-                Console.WriteLine(member.Name);
-            }
 
-            string answer = Console.ReadLine();*/
             for (int i = 0; i < membersOfTheGroup.Count; i++)
             {
 
@@ -150,18 +165,20 @@ namespace assignment2
             }
 
             int answer = Convert.ToInt32(Console.ReadLine());
+            //Skriver ut vem som tas bort innan den rensas bort från listan.
+            Console.WriteLine($"Tar bort person {membersOfTheGroup[answer - 1].Name}");
 
             membersOfTheGroup.RemoveAt(answer - 1);
-      
 
+            WaitAndClearConsole();
         }
     }
 
 
- }
+}
 
 
-    
+
 
 
 

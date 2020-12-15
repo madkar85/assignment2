@@ -6,6 +6,7 @@ namespace assignment2
 {
     class Person
     {
+        //privata fält generella för en person
         private string name;
         private string city;
         private int age;
@@ -17,7 +18,7 @@ namespace assignment2
         private string favoriteFood;
         private string favoriteMusic;
         
-
+        
         public string Name { get => name; set => name = value; }
         public string City { get => city; set => city = value; }
         public int Age { get => age; set => age = value; }

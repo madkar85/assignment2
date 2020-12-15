@@ -6,10 +6,12 @@ namespace assignment2
 {
     class Member : Person
     {
-
+        //privat fält specifikt för medlemmarna i gruppen
         private string reasonForProgramming;
+
         public string ReasonForProgramming { get => reasonForProgramming; set => reasonForProgramming = value; }
 
+        //konstruktorer
         public Member()
         {
 
@@ -38,6 +40,7 @@ namespace assignment2
 
         }
 
+        //Override på ToString-metoden så detta skrivs ut istället
         public override string ToString()
         {
             return $"{this.Name} bor i {this.City}, är {this.Age} år och bor i en {this.Housing}. Familjen består av {this.Family}. Vad har {this.Name} för husdjur? {this.Pets}. Var tidigare {this.Occupation} och hobby är {this.Hobby}. " +
